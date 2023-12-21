@@ -5,6 +5,19 @@
 ```go
 package main
 
+import (
+	"context"
+	"fmt"
+	"os"
+	"strconv"
+
+	"github.com/apache/rocketmq-client-go/v2"
+	"github.com/apache/rocketmq-client-go/v2/primitive"
+	"github.com/apache/rocketmq-client-go/v2/producer"
+	"github.com/volcengine/dns-stale-cache/common"
+	. "github.com/volcengine/dns-stale-cache/rocketmq"
+)
+
 // Package main implements a simple producer to send message.
 func main() {
 	addrs := []string{"127.0.0.1:9876"}
@@ -52,6 +65,17 @@ func main() {
 
 package main
 
+import (
+	"context"
+	"errors"
+	"fmt"
+	"time"
+
+	"github.com/redis/go-redis/v9"
+	"github.com/volcengine/dns-stale-cache/common"
+	. "github.com/volcengine/dns-stale-cache/redis"
+)
+
 func ExampleNewClient() {
 	opt := &redis.Options{
 		Addr:     "localhost:6379", // use default Addr
@@ -64,7 +88,7 @@ func ExampleNewClient() {
 	)
 	rdb := redis.NewClient(opt)
 
-	pong, err := rdb.Ping(ctx).Result()
+	pong, err := rdb.Ping(context.Background()).Result()
 	fmt.Println(pong, err)
 	// Output: PONG <nil>
 }
