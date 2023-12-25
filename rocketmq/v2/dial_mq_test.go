@@ -36,7 +36,7 @@ func TestNewCacheResolver(t *testing.T) {
 
 	resolver := NewCacheResolver(addrs,
 		WithCacheFirst(true),
-		WithIpStorageFirst(true),
+		WithIPConsistance(true),
 		WithDnsTimeout(1*time.Second),
 	)
 

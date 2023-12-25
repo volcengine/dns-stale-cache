@@ -37,7 +37,7 @@ func main() {
 	p, _ := rocketmq.NewProducer(
 		producer.WithNsResolver(NewCacheResolver(addrs,
 			WithCacheFirst(true),
-			WithIpStorageFirst(true),
+			WithIPConsistance(true),
 			WithDnsTimeout(1*time.Second),
 		)),
 		producer.WithRetry(2),
@@ -95,7 +95,7 @@ func ExampleNewClient() {
 
 	opt.Dialer = NewDialerWithCache(opt,
 		WithCacheFirst(true),
-		WithIpStorageFirst(true),
+		WithIPConsistance(true),
 		WithDnsTimeout(2*time.Second),
 	)
 	rdb := redis.NewClient(opt)

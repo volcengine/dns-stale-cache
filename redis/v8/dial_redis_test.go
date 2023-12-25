@@ -33,7 +33,7 @@ func ExampleClient() {
 	}
 	opt.Dialer = NewDialerWithCache(opt,
 		WithCacheFirst(true),
-		WithIpStorageFirst(true),
+		WithIPConsistance(true),
 		WithDnsTimeout(2*time.Second),
 	)
 

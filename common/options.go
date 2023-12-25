@@ -45,9 +45,9 @@ func WithCacheFirst(preferUse bool) Option {
 	}
 }
 
-// WithIpStorageFirst Persist cached content or not.
+// WithIPConsistance Persist cached content or not.
 // Default is false.
-func WithIpStorageFirst(preferUse bool) Option {
+func WithIPConsistance(preferUse bool) Option {
 	return func(options *cacheOptions) {
 		options.preferSaveIP = preferUse
 	}
