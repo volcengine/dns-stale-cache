@@ -26,13 +26,13 @@ import (
 	"github.com/apache/rocketmq-client-go/v2"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"github.com/apache/rocketmq-client-go/v2/producer"
-	"github.com/volcengine/dns-stale-cache/common"
+	. "github.com/volcengine/dns-stale-cache/common"
 	. "github.com/volcengine/dns-stale-cache/rocketmq/v2"
 )
 
 // Package main implements a simple producer to send message.
 func main() {
-	addrs := []string{"127.0.0.1:9876"}
+	addrs := []string{"localhost:9876"}
 	
 	p, _ := rocketmq.NewProducer(
 		producer.WithNsResolver(NewCacheResolver(addrs,
@@ -84,7 +84,7 @@ import (
 	"time"
 
 	"github.com/redis/go-redis/v9"
-	"github.com/volcengine/dns-stale-cache/common"
+	. "github.com/volcengine/dns-stale-cache/common"
 	. "github.com/volcengine/dns-stale-cache/redis/v9"
 )
 
