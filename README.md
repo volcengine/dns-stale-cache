@@ -1,6 +1,18 @@
+### Requirement
+For Redis:
+go-redis client version >= v6.15
+
+For RocketMQ:
+rocketmq-client-go version >= v2
+
+### Installation
+```shell
+go get github.com/volcengine/dns-stale-cache
+```
+
 ### Example
 
-#### For rocketmq
+#### For rocketmq client/v2
 
 ```go
 package main
@@ -60,7 +72,7 @@ func main() {
 ```
 
 
-#### For redis
+#### For redis client/v9
 ```go
 
 package main

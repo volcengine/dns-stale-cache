@@ -1,4 +1,4 @@
-package redis
+package v8
 
 import (
 	"context"
@@ -7,13 +7,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/redis/go-redis/v9"
+	"github.com/go-redis/redis/v8"
 	. "github.com/volcengine/dns-stale-cache/common"
 )
 
 // NewDialerWithCache returns a function that will be used as the default dialer
 // when none is specified in Options.Dialer.
-func NewDialerWithCache(opt *redis.Options, opts ...Option) func(context.Context, string, string) (net.Conn, error) {
+func NewDialerWithCache(opt *redis.Options, cacheOpts ...Option) func(context.Context, string, string) (net.Conn, error) {
 	return func(ctx context.Context, network, addr string) (net.Conn, error) {
 		var firstErr error
 		var netDialer = &net.Dialer{
@@ -27,8 +27,8 @@ func NewDialerWithCache(opt *redis.Options, opts ...Option) func(context.Context
 			return tls.DialWithDialer(netDialer, network, addr, opt.TLSConfig)
 		}
 
-		opts = append(opts, WithAddr([]string{opt.Addr}))
-		addrList, err := NewResolver(opts...).LookupHost()
+		cacheOpts = append(cacheOpts, WithAddr([]string{opt.Addr}))
+		addrList, err := NewResolver(cacheOpts...).LookupHost()
 		if err == nil && len(addrList) == 1 && addrList[0] != "" {
 			addrs := strings.Split(addrList[0], ",")
 

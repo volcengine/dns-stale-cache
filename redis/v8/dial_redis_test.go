@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package redis
+package v8
 
 import (
 	"context"
 	"fmt"
 	"time"
 
-	"github.com/redis/go-redis/v9"
+	"github.com/go-redis/redis/v8"
 	. "github.com/volcengine/dns-stale-cache/common"
 )
 
