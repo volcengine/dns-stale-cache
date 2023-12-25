@@ -27,7 +27,7 @@ import (
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"github.com/apache/rocketmq-client-go/v2/producer"
 	"github.com/volcengine/dns-stale-cache/common"
-	. "github.com/volcengine/dns-stale-cache/rocketmq"
+	. "github.com/volcengine/dns-stale-cache/rocketmq/v2"
 )
 
 // Package main implements a simple producer to send message.
@@ -85,7 +85,7 @@ import (
 
 	"github.com/redis/go-redis/v9"
 	"github.com/volcengine/dns-stale-cache/common"
-	. "github.com/volcengine/dns-stale-cache/redis"
+	. "github.com/volcengine/dns-stale-cache/redis/v9"
 )
 
 func ExampleNewClient() {
