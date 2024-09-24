@@ -147,13 +147,19 @@ func (r *Resolver) start() {
 	})
 }
 
+var defaultResolver *Resolver
+
 func NewResolver(opts ...Option) *Resolver {
+	if defaultResolver != nil {
+		return defaultResolver
+	}
+
 	defaultOpts := defaultOption()
 	for _, apply := range opts {
 		apply(&defaultOpts)
 	}
 
-	r := &Resolver{
+	defaultResolver = &Resolver{
 		context:   context.Background(),
 		opt:       &defaultOpts,
 		staleUpTo: staleUpto,
@@ -161,10 +167,10 @@ func NewResolver(opts ...Option) *Resolver {
 		goPool:    gopool.NewPool("DnsHandler", int32(10*runtime.GOMAXPROCS(0)), gopool.NewConfig()),
 	}
 
-	r.readFile()
-	r.start()
+	defaultResolver.readFile()
+	defaultResolver.start()
 
-	return r
+	return defaultResolver
 }
 
 func newItem(info *[]string, hasWrite bool) *item {

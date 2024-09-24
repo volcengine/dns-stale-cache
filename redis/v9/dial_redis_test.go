@@ -29,7 +29,8 @@ var ctx = context.Background()
 
 func ExampleClient() {
 	opt := &redis.Options{
-		Addr: "localhost:6379",
+		Addr:            "localhost:6379",
+		ConnMaxLifetime: time.Second,
 	}
 	opt.Dialer = NewDialerWithCache(opt,
 		WithCacheFirst(true),
@@ -39,24 +40,26 @@ func ExampleClient() {
 
 	rdb := redis.NewClient(opt)
 
-	err := rdb.Set(ctx, "key1", "value1", 0).Err()
-	if err != nil {
-		panic(err)
-	}
+	for {
+		err := rdb.Set(ctx, "key1", "value1", 0).Err()
+		if err != nil {
+			panic(err)
+		}
 
-	val, err := rdb.Get(ctx, "key1").Result()
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("key", val)
+		val, err := rdb.Get(ctx, "key1").Result()
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("key", val)
 
-	val2, err := rdb.Get(ctx, "key2").Result()
-	if err == redis.Nil {
-		fmt.Println("key2 does not exist")
-	} else if err != nil {
-		panic(err)
-	} else {
-		fmt.Println("key2", val2)
+		val2, err := rdb.Get(ctx, "key2").Result()
+		if err == redis.Nil {
+			fmt.Println("key2 does not exist")
+		} else if err != nil {
+			panic(err)
+		} else {
+			fmt.Println("key2", val2)
+		}
 	}
 	// Output: key value
 	// key2 does not exist

@@ -11,6 +11,8 @@ import (
 	. "github.com/volcengine/dns-stale-cache/common"
 )
 
+var defaultResolver *Resolver
+
 // NewDialerWithCache returns a function that will be used as the default dialer
 // when none is specified in Options.Dialer.
 func NewDialerWithCache(opt *redis.Options, cacheOpts ...Option) func() (net.Conn, error) {
@@ -27,8 +29,11 @@ func NewDialerWithCache(opt *redis.Options, cacheOpts ...Option) func() (net.Con
 			return tls.DialWithDialer(netDialer, opt.Network, addr, opt.TLSConfig)
 		}
 
-		cacheOpts = append(cacheOpts, WithAddr([]string{opt.Addr}))
-		addrList, err := NewResolver(cacheOpts...).LookupHost()
+		if defaultResolver == nil {
+			cacheOpts = append(cacheOpts, WithAddr([]string{opt.Addr}))
+			defaultResolver = NewResolver(cacheOpts...)
+		}
+		addrList, err := defaultResolver.LookupHost()
 		if err == nil && len(addrList) == 1 && addrList[0] != "" {
 			addrs := strings.Split(addrList[0], ",")
 
